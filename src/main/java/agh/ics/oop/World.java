@@ -4,9 +4,23 @@ import java.util.ArrayList;
 
 public class World {
     public static void main(String[] args) {
-        ArrayList<Directions> enumList = new ArrayList<>();
-        Directions[] newTable = changeToEnum(args,enumList);
-        run(newTable);
+        //MapDirectionCheck
+        MapDirection test = MapDirection.NORTH;
+        System.out.println(test.next());
+        System.out.println(test.previous());
+        System.out.println(test);
+        System.out.println(test.toUnitVector());
+        System.out.println("---------------------");
+        Vector2d position1 = new Vector2d(1,2);
+        System.out.println(position1);
+        Vector2d position2 = new Vector2d(-2,1);
+        System.out.println(position2);
+        System.out.println(position1.add(position2));
+
+//        Laby1
+//        ArrayList<Directions> enumList = new ArrayList<>();
+//        Directions[] newTable = changeToEnum(args,enumList);
+//        run(newTable);
     }
     public static void run(Directions[] table){
         System.out.println("System wystartował");
