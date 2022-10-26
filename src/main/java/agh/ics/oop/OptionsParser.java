@@ -20,5 +20,4 @@ public class OptionsParser {
         tempArray.toArray(table);
         return table;
     }
-
 }

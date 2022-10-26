@@ -1,5 +1,4 @@
 package agh.ics.oop;
-
 public class Animal {
     private Vector2d position;
     private MapDirection orientation;

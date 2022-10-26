@@ -6,7 +6,6 @@ public class World {
         //Laby3
         Animal kotek = new Animal();
         System.out.println(kotek);
-
         MoveDirection[] moveDirections=new OptionsParser().parser(args);
         for(MoveDirection argument : moveDirections){
             kotek.move(argument);
