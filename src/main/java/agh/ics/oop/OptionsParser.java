@@ -1,7 +1,6 @@
 package agh.ics.oop;
 
 import java.util.ArrayList;
-
 public class OptionsParser {
     public MoveDirection[] parser(String[] tab){
         ArrayList<MoveDirection> tempArray= new ArrayList<>();
