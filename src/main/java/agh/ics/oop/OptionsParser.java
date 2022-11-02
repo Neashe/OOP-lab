@@ -2,7 +2,7 @@ package agh.ics.oop;
 
 import java.util.ArrayList;
 public class OptionsParser {
-    public MoveDirection[] parser(String[] tab){
+    public MoveDirection[] parse(String[] tab){
         ArrayList<MoveDirection> tempArray= new ArrayList<>();
         for(String argument:tab){
             MoveDirection outcome = switch(argument){

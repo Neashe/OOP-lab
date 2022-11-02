@@ -1,15 +1,13 @@
 package agh.ics.oop;
 
-
 public class World {
     public static void main(String[] args) {
-        //Laby3
-        Animal kotek = new Animal();
-        System.out.println(kotek);
-        MoveDirection[] moveDirections=new OptionsParser().parser(args);
-        for(MoveDirection argument : moveDirections){
-            kotek.move(argument);
-        }
-        System.out.println(kotek);
+
+        MoveDirection[] directions = new OptionsParser().parse(args);
+        IWorldMap map = new RectangularMap(10, 5);
+        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
+        IEngine engine = new SimulationEngine(directions, map, positions);
+        engine.run();
+        System.out.println("kebab");
     }
 }

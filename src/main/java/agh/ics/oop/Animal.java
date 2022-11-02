@@ -2,34 +2,45 @@ package agh.ics.oop;
 public class Animal {
     private Vector2d position;
     private MapDirection orientation;
-    public Animal(){
-        this.position = new Vector2d(2,2);
+    private final IWorldMap map;
+    public Animal(IWorldMap map){
+        this.map = map; //do poprawy,idk o co chodzi
+    }
+    public Animal(IWorldMap map, Vector2d initialPosition){
+        this.map = map;
+        this.position = initialPosition;
         this.orientation = MapDirection.NORTH;
     }
     public String toString(){
-        return "Zwierzak stoi w punkcie "+position+" skierowany na "+orientation;
+        MapDirection orient = this.orientation;
+        return switch(orient) {
+            case NORTH->"^";
+            case WEST -> "<";
+            case EAST -> ">";
+            case SOUTH -> "v";
+        };
     }
-    public boolean isAt(Vector2d position){
-        return (this.position==position);
-    }
-    public void move(MoveDirection direction){
-        Vector2d a;
-        if(direction == MoveDirection.LEFT){
-            this.orientation = this.orientation.previous();
-        } else if (direction==MoveDirection.RIGHT) {
-            this.orientation = this.orientation.next();
 
-        } else if (direction==MoveDirection.FORWARD) {
-            a = this.position.add(this.orientation.toUnitVector());
-            if(a.x>=0 && a.y>=0 && a.x<=4 && a.y<=4){
-                this.position = a;
+    public boolean isAt(Vector2d position){
+        return (this.position.equals(position));
+    }
+    public MapDirection getOrientation(){
+        return this.orientation;
+    }
+    public Vector2d getPosition(){
+        return this.position;
+    }
+
+    public void move(MoveDirection direction){
+        Vector2d newPosition = this.position;
+        switch(direction){
+            case LEFT -> this.orientation = this.orientation.previous();
+            case RIGHT -> this.orientation=this.orientation.next();
+            case FORWARD -> newPosition = this.position.add(this.orientation.toUnitVector());
+            case BACKWARD -> newPosition = this.position.subtract(this.orientation.toUnitVector());
             }
-        }
-        else{
-            a = this.position.subtract(this.orientation.toUnitVector());
-            if(a.x>=0 && a.y>=0 && a.x<=4 && a.y<=4){
-                this.position = a;
+            if (this.map.canMoveTo(newPosition)){
+                this.position = newPosition;
             }
         }
     }
-}
