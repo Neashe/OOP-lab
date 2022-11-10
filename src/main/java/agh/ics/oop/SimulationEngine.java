@@ -25,8 +25,10 @@ public class SimulationEngine implements IEngine{
                 animal.move(moveTable[i]);
                 this.initialAnimalPositions[i%animalNumb] = animal.getPosition();
                 //System.out.println("zwierze nr"+(i%animalNumb)+animal.getPosition());
+
             }
 
         }
+        System.out.println(this.map);
     }
 }

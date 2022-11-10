@@ -4,7 +4,9 @@ public class Animal {
     private MapDirection orientation;
     private final IWorldMap map;
     public Animal(IWorldMap map){
-        this.map = map; //do poprawy,idk o co chodzi
+        this.map = map;
+        this.position = new Vector2d(2,2);
+        this.orientation = MapDirection.NORTH;
     }
     public Animal(IWorldMap map, Vector2d initialPosition){
         this.map = map;
