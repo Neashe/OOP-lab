@@ -1,23 +1,26 @@
 package agh.ics.oop;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-abstract class AbstractWorldMap implements IWorldMap {
-    protected List<Animal> animalList = new ArrayList<Animal>();
+abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
+//    protected List<Animal> animalList = new ArrayList<>();
 //    protected List<Grass> grassList = new ArrayList<Grass>();
-    public Vector2d upperRight;
-    public Vector2d lowerLeft;
-    public boolean canMoveTo(Vector2d position) {
-        return position.follows(this.upperRight) && position.precedes(this.lowerLeft) && (!isOccupied(position));
-    }
+    protected Map<Vector2d,Animal> animalList;// = new HashMap<>();
+    protected Map<Vector2d,Grass> grassList;
+    protected Vector2d upperRight;
+    protected Vector2d lowerLeft;
+    public abstract boolean canMoveTo(Vector2d position);
 
     @Override
 
     public boolean place(Animal animal) {
         Vector2d animalPosition = animal.getPosition();
         if(canMoveTo(animalPosition)){
-            this.animalList.add(animal);
+            this.animalList.put(animalPosition,animal);
+            animal.addObserver(this);
             return true;
         }
         else {
@@ -27,28 +30,25 @@ abstract class AbstractWorldMap implements IWorldMap {
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        for(Animal animal:animalList){
-            if (animal.isAt(position)){
-                return true;
-            }
-        }
-        return false;
+        return this.animalList.containsKey(position);
     }
 
     @Override
     public Object objectAt(Vector2d position) {
-        for(Animal animal:animalList){
-            if (animal.isAt(position)){
-                return animal;
-            }
+        if (isOccupied(position)) {
+            return this.animalList.get(position);
         }
         return null;
     }
 
     @Override
-    public String toString() {
-        MapVisualizer newMap = new MapVisualizer(this);
-        return newMap.draw(lowerLeft,upperRight);
-    }
+    public abstract String toString();
 
+
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        Animal animal = this.animalList.get(oldPosition);
+        this.animalList.remove(oldPosition);
+        this.animalList.put(newPosition,animal);
+    }
 }

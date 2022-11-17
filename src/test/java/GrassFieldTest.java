@@ -2,6 +2,8 @@ import agh.ics.oop.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 public class GrassFieldTest {
     int grassN = 10;
     GrassField map = new GrassField(grassN);
@@ -29,13 +31,20 @@ public class GrassFieldTest {
 
     @Test
     public void placeOccupTest(){
-        for(int i = 0; i<grassN-1;i++){
-            Assertions.assertTrue(map.place(new Animal(map,map.getGrassAt(i).getPosition())));
-            Assertions.assertTrue(map.isOccupied(map.getGrassAt(i).getPosition()));
+        Set<Vector2d> grassSet = map.getgrassSet();
+        for(Vector2d vector:grassSet){
+            Assertions.assertTrue(map.place(new Animal(map,vector)));
+            Assertions.assertTrue(map.isOccupied(vector));
         }
-        Animal kaczka = new Animal(map,map.getGrassAt(grassN-1).getPosition());
-        map.place(kaczka);
-        kaczka.move(MoveDirection.BACKWARD);
-        System.out.println(map);
     }
+    @Test
+    public void canMovetoGrass(){
+        Set<Vector2d> grassSet = map.getgrassSet();
+        for(Vector2d vector:grassSet){
+            Assertions.assertTrue(map.canMoveTo(vector));
+        }
+    }
+
+
+
 }

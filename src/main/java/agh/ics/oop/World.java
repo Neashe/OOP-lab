@@ -9,6 +9,7 @@ public class World {
         IEngine engine = new SimulationEngine(directions, map, positions);
         engine.run();
 
+
         IWorldMap map2 = new GrassField(10);
         IEngine engine2 = new SimulationEngine(directions,map2,positions);
         engine2.run();
