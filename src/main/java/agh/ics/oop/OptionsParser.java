@@ -2,19 +2,16 @@ package agh.ics.oop;
 
 import java.util.ArrayList;
 public class OptionsParser {
-    public MoveDirection[] parse(String[] tab){
+    public MoveDirection[] parse(String[] tab) throws IllegalArgumentException{
         ArrayList<MoveDirection> tempArray= new ArrayList<>();
         for(String argument:tab){
-            MoveDirection outcome = switch(argument){
-                case "f", "forward" -> MoveDirection.FORWARD;
-                case "b","backward" ->MoveDirection.BACKWARD;
-                case "l","left"->MoveDirection.LEFT;
-                case "r","right"->MoveDirection.RIGHT;
-                default -> null;
+            switch(argument){
+                case "f", "forward" -> tempArray.add(MoveDirection.FORWARD);
+                case "b","backward" ->tempArray.add(MoveDirection.BACKWARD);
+                case "l","left"->tempArray.add(MoveDirection.LEFT);
+                case "r","right"->tempArray.add(MoveDirection.RIGHT);
+                default -> throw new IllegalArgumentException(argument+ " nie jest poprawnym argumentem!");
             };
-            if (outcome !=null){
-                tempArray.add(outcome);
-            }
         }
         MoveDirection[] table = new MoveDirection[tempArray.size()];
         tempArray.toArray(table);

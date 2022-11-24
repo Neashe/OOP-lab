@@ -43,6 +43,11 @@ public class GrassFieldTest {
         for(Vector2d vector:grassSet){
             Assertions.assertTrue(map.canMoveTo(vector));
         }
+        System.out.println(map);
+        for(Vector2d vector:grassSet){
+            Assertions.assertTrue(map.place(new Animal(map,vector)));
+        }
+        System.out.println(map);
     }
 
 

@@ -14,17 +14,24 @@ abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     protected Vector2d lowerLeft;
     public abstract boolean canMoveTo(Vector2d position);
 
+    public abstract Vector2d getLowerLeft();
+    public abstract Vector2d getUpperRight();
     @Override
 
-    public boolean place(Animal animal) {
+    public boolean place(Animal animal) throws IllegalArgumentException{
+
         Vector2d animalPosition = animal.getPosition();
         if(canMoveTo(animalPosition)){
             this.animalList.put(animalPosition,animal);
             animal.addObserver(this);
             return true;
         }
-        else {
-            return false;
+        else if (animalPosition.follows(this.lowerLeft) && animalPosition.precedes(this.upperRight)) {
+
+            throw new IllegalArgumentException(animalPosition + " jest już zajęte");
+        }
+        else{
+            throw new IllegalArgumentException(animalPosition+ " znajduje się poza planszą!");
         }
     }
 

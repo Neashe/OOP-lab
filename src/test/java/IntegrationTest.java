@@ -9,7 +9,8 @@ public class IntegrationTest {
         Animal dog = new Animal(map,new Vector2d(2,7));
         Animal capybara = new Animal(map,new Vector2d(3,5));
         Assertions.assertTrue(map.place(capybara));
-        Assertions.assertFalse(map.place(dog));
+        Throwable exception = Assertions.assertThrows(IllegalArgumentException.class,()->map.place(dog));
+        Assertions.assertEquals(dog.getPosition()+" znajduje się poza planszą!",exception.getMessage());
         Assertions.assertFalse(map.canMoveTo(new Vector2d(3,5)));
         Assertions.assertEquals(capybara,map.objectAt(new Vector2d(3,5)));
         Assertions.assertTrue(map.canMoveTo(new Vector2d(1,1)));
@@ -18,15 +19,11 @@ public class IntegrationTest {
     @Test
     public void RectangularMapTest(){
         IWorldMap map = new RectangularMap(3,6);
-        Animal dog = new Animal(map,new Vector2d(2,7));
         Animal capybara = new Animal(map,new Vector2d(3,5));
         Assertions.assertTrue(map.canMoveTo(new Vector2d(2,2)));
         Assertions.assertTrue(map.canMoveTo(new Vector2d(3,5)));
-        Assertions.assertFalse(map.place(dog));
         map.place(capybara);
         Assertions.assertEquals(capybara,map.objectAt(new Vector2d(3,5)));
-        System.out.println("test2");
-        map.place(dog);
         Assertions.assertTrue(map.isOccupied(new Vector2d(3,5)));
         Assertions.assertFalse(map.canMoveTo(new Vector2d(3,5)));
         Assertions.assertEquals(capybara,map.objectAt(new Vector2d(3,5)));
@@ -46,5 +43,13 @@ public class IntegrationTest {
         Assertions.assertEquals(new Vector2d(5,4),positions[2]);
 
     }
+    @Test
+    void parserTest(){
+        String[] arguments = ("f hehe b r l f f r r f f hm f f f f f f").split(" ");
+        OptionsParser parser = new OptionsParser();
+        Throwable exception = Assertions.assertThrows(IllegalArgumentException.class, ()-> parser.parse(arguments));
+        Assertions.assertEquals("hehe nie jest poprawnym argumentem!",exception.getMessage());
+    }
+
 
 }

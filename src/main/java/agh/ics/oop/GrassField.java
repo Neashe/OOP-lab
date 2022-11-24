@@ -5,7 +5,16 @@ import java.util.*;
 public class GrassField extends AbstractWorldMap {
 
     int grassNum;
+    private final MapBoundary mapBoundary;
 //    List<Grass> grassList;
+    public Vector2d getLowerLeft(){
+        return mapBoundary.getLowerLeft();
+    }
+
+    @Override
+    public Vector2d getUpperRight() {
+        return mapBoundary.getUpperRight();
+    }
 
     public GrassField(int grassNum){
         this.grassNum = grassNum;
@@ -13,6 +22,7 @@ public class GrassField extends AbstractWorldMap {
         this.grassList = new HashMap<>();
         this.upperRight =new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE);
         this.lowerLeft = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
+        this.mapBoundary = new MapBoundary();
 
         int maxL = (int) Math.sqrt(grassNum*10);
         Random rand = new Random();
@@ -20,8 +30,10 @@ public class GrassField extends AbstractWorldMap {
         while(grassCounter<grassNum){
             int randA = rand.nextInt(maxL);
             int randB = rand.nextInt(maxL);
+            Vector2d newVector = new Vector2d(randA,randB);
             if(!isOccupied(new Vector2d(randA,randB))){
-                this.grassList.put(new Vector2d(randA,randB),new Grass(new Vector2d(randA,randB)));
+                this.grassList.put(newVector,new Grass(newVector));
+                mapBoundary.addPosition(newVector);
                 grassCounter++;
             }
 
@@ -48,6 +60,7 @@ public class GrassField extends AbstractWorldMap {
         Object object = objectAt(animalPosition);
         if (object instanceof Grass) {
             this.animalList.put(animalPosition,animal);
+            this.mapBoundary.addPosition(animalPosition);
             return true;
             }
         return false;
@@ -68,17 +81,19 @@ public class GrassField extends AbstractWorldMap {
 
     @Override
     public String toString() {
-        Set<Vector2d> setA=animalList.keySet();
-        Set<Vector2d> setG=grassList.keySet();
-
-        for (Vector2d vector:setA){
-            upperRight = upperRight.upperRight(vector);
-            lowerLeft = lowerLeft.lowerLeft(vector);
-        }
-        for (Vector2d vector:setG){
-            upperRight = upperRight.upperRight(vector);
-            lowerLeft = lowerLeft.lowerLeft(vector);
-        }
+//        Set<Vector2d> setA=animalList.keySet();
+//        Set<Vector2d> setG=grassList.keySet();
+//
+//        for (Vector2d vector:setA){
+//            upperRight = upperRight.upperRight(vector);
+//            lowerLeft = lowerLeft.lowerLeft(vector);
+//        }
+//        for (Vector2d vector:setG){
+//            upperRight = upperRight.upperRight(vector);
+//            lowerLeft = lowerLeft.lowerLeft(vector);
+//        }
+        upperRight = mapBoundary.getUpperRight();
+        lowerLeft = mapBoundary.getLowerLeft();
         MapVisualizer newMap = new MapVisualizer(this);
         return newMap.draw(lowerLeft,upperRight);
     }
