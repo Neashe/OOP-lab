@@ -39,6 +39,11 @@ public class GrassField extends AbstractWorldMap {
 
         }
     }
+
+    public MapBoundary getMapBoundary() {
+        return mapBoundary;
+    }
+
     public Grass getGrassAt(Vector2d position){
         return grassList.get(position);
     }

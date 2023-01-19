@@ -5,8 +5,8 @@ import java.util.TreeSet;
 
 public class MapBoundary implements IPositionChangeObserver{
 
-    private TreeSet<Vector2d> sortedbyY = new TreeSet<>(Comparator.comparing((Vector2d a)->a.x).thenComparing(a->a.y));
-    private TreeSet<Vector2d> sortedbyX = new TreeSet<>(Comparator.comparing((Vector2d a)->a.y).thenComparing(a->a.x));
+    private TreeSet<Vector2d> sortedbyX = new TreeSet<>(Comparator.comparing((Vector2d a)->a.x).thenComparing(a->a.y));
+    private TreeSet<Vector2d> sortedbyY = new TreeSet<>(Comparator.comparing((Vector2d a)->a.y).thenComparing(a->a.x));
 
 //    public MapBoundary(TreeSet<Vector2d> sortedbyX,TreeSet<Vector2d> sortedbyY){
 //
@@ -32,6 +32,9 @@ public class MapBoundary implements IPositionChangeObserver{
         Vector2d x = sortedbyX.last();
         Vector2d y = sortedbyY.last();
         return x.upperRight(y);
+    }
+    public TreeSet<Vector2d> getElementsSet(){
+        return this.sortedbyX;
     }
 
 }

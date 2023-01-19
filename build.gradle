@@ -16,10 +16,10 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
-    javafx {
-        version = "17"
-        modules = [ 'javafx.controls' ]
-    }
+}
+javafx {
+    version = "17"
+    modules = [ 'javafx.controls' ]
 }
 
 dependencies {

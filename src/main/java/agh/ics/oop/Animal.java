@@ -3,7 +3,7 @@ package agh.ics.oop;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Animal {
+public class Animal implements IMapElement{
     private Vector2d position;
     private MapDirection orientation;
     private final IWorldMap map;
@@ -66,4 +66,14 @@ public class Animal {
                 positionChanged(oldPosition,newPosition);
             }
         }
+
+    @Override
+    public String getImagePath() {
+        return switch(this.orientation){
+            case SOUTH -> "src/main/resources/down.png";
+            case EAST -> "src/main/resources/right.png";
+            case WEST -> "src/main/resources/left.png";
+            case NORTH -> "src/main/resources/up.png";
+        };
     }
+}

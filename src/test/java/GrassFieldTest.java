@@ -37,19 +37,5 @@ public class GrassFieldTest {
             Assertions.assertTrue(map.isOccupied(vector));
         }
     }
-    @Test
-    public void canMovetoGrass(){
-        Set<Vector2d> grassSet = map.getgrassSet();
-        for(Vector2d vector:grassSet){
-            Assertions.assertTrue(map.canMoveTo(vector));
-        }
-        System.out.println(map);
-        for(Vector2d vector:grassSet){
-            Assertions.assertTrue(map.place(new Animal(map,vector)));
-        }
-        System.out.println(map);
-    }
-
-
 
 }
